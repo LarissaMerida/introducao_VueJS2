@@ -7,42 +7,48 @@
   </head>
   <body>
     <div id="app">
-      {{ msg }}
-      <p v-bind:title="titulo">Teste com title</title> </p>
-      <p v-if="condicao">Teste com if</p>
-      <p v-for="registro in registros">{{registro.titulo}}</p>
-      <button v-if="!clicou" v-on:click="usuarioClicou">salvar</button>
-      <button v-if="clicou" v-on:click="usuarioClicou">aguarde...</button>
-      <p>
-        <input type="text" v-model="usuario.nome">
-      </p>
+      <gui-titulo v-bind:titulo="meuTitulo"></gui-titulo>
+      <input type="text" v-model="meuTitulo">
 
-      <p>Nome: {{ usuario.nome }}</p>
+      <gui-tabela v-bind:titulos="['Titulo', 'Descrição', 'Link']" v-bind:registros="registros"></gui-tabela>
+
+
     </div>
 
     <script type="text/javascript">
-      var app = new Vue({
-        el:"#app",
-        data:{
-          msg:'Iniciando com VueJS',
-          titulo:'Teste com V-Bind',
-          condicao:true,
-          registros: [<!--array de objetos -->
-            {titulo:"registro 1"},
-            {titulo:"registro 2"},
-            {titulo:"registro 3"},
-            {titulo:"registro 4"},
-            {titulo:"registro 5"}
-          ],
-          clicou: false,
-          usuario: {nome:""}
-        },  <!--funções-->
-        methods: {
-          usuarioClicou: function(){
-            this.clicou = !this.click
-          }
-        }
 
+      Vue.component('gui-titulo', {
+        props:['titulo'],
+        template:'<h2>{{ titulo }}</h2>'
+      })
+
+      Vue.component('gui-tabela', {
+        props:['titulos','registros'],
+        template:
+          '<table style="width:100%">'+
+            '<thead>'+
+              '<tr>'+
+                '<th v-for="titulo in titulos"> {{titulo}}</th>'+
+
+              '</tr>'+
+            '</thead>'+
+            '<tbody>'+
+              '<tr v-for="registro in registros">'+
+                '<td v-for="item in registro"> {{item}}</td>'+
+              '</tr>'+
+            '</tbody>'+
+          '</table>'
+      })
+
+      var app = new Vue({
+        el:"#app", <!-- id-->
+        data:{
+          meuTitulo: 'Esse é o titulo',
+          registros: [{titulo: 'Titulo1', descricao:'Descrição1', link:'Link1'},
+                      {titulo: 'Titulo2', descricao:'Descrição2', link:'Link2'},
+                      {titulo: 'Titulo3', descricao:'Descrição3', link:'Link3'}
+                    ]
+        }
       });
 
 
