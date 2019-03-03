@@ -7,12 +7,65 @@
   </head>
   <body>
     <div id="app">
-      <gui-titulo v-bind:titulo="meuTitulo"></gui-titulo>
-      <input type="text" v-model="meuTitulo">
+      <gui-titulo titulo="Formulários"></gui-titulo>
 
-      <gui-tabela v-bind:titulos="['Titulo', 'Descrição', 'Link']" v-bind:registros="registros"></gui-tabela>
+      <p>Texto: {{texto}}</p>
+      <p>
+        <input type="text" v-model="texto">
+      </p>
 
+      <p>Textarea: {{textarea}}</p>
+      <p style="white-space: pre-line">{{textarea}}</p>
+      <p>
+        <textarea v-model="textarea" rows="8" cols="80"></textarea>
+      </p>
 
+      <p>Checkbox:</p>
+      <input type="checkbox" id="aceitaTermos" v-model="termos">
+      <label for="aceitaTermos">{{termos}}</label>
+
+      <p>Multiple Checkbox:{{notificacoes}}</p>
+      <p>
+        <input type="checkbox" id="receberEmail" value="email" v-model="notificacoes">
+        <label for="receberEmail">receber e-mail</label>
+        <input type="checkbox" id="receberSMS" value="sms" v-model="notificacoes">
+        <label for="receberSMS">Receber SMS</label>
+        <input type="checkbox" id="receberTelefone" value="tel" v-model="notificacoes">
+        <label for="receberEmail">Receber Ligação</label>
+      </p>
+
+      <p>Rádio: {{sexo}}</p>
+      <p>
+        <input type="radio" id="masculino" value="M" v-model="sexo">
+        <label for="masculino">Masculino</label>
+        <input type="radio" id="feminino" value="F" v-model="sexo">
+        <label for="feminino">Feminino</label>
+      </p>
+
+      <p>Select {{ano}}</p>
+      <p>
+        <select v-model="ano">
+            <option disabled value="">Escolha o ano</option>
+            <option value="2017">Ano 2017</option>
+            <option value="2018">Ano 2018</option>
+            <option value="2019">Ano 2019</option>
+        </select>
+      </p>
+
+      <p>Multiple Selects {{cores}}</p>
+      <p>
+        <select multiple v-model="cores">
+            <option disabled value="">Escolha as cores</option>
+            <option>Azul</option>
+            <option>Verde</option>
+            <option>Vermelho</option>
+        </select>
+      </p>
+
+      <p>Lazy: {{busca}}</p>
+      <p>
+        <input type="text" v-model.lazy="busca">
+      </p>
     </div>
 
     <script type="text/javascript">
@@ -22,38 +75,21 @@
         template:'<h2>{{ titulo }}</h2>'
       })
 
-      Vue.component('gui-tabela', {
-        props:['titulos','registros'],
-        template:
-          '<table style="width:100%">'+
-            '<thead>'+
-              '<tr>'+
-                '<th v-for="titulo in titulos"> {{titulo}}</th>'+
-
-              '</tr>'+
-            '</thead>'+
-            '<tbody>'+
-              '<tr v-for="registro in registros">'+
-                '<td v-for="item in registro"> {{item}}</td>'+
-              '</tr>'+
-            '</tbody>'+
-          '</table>'
-      })
-
       var app = new Vue({
         el:"#app", <!-- id-->
         data:{
-          meuTitulo: 'Esse é o titulo',
-          registros: [{titulo: 'Titulo1', descricao:'Descrição1', link:'Link1'},
-                      {titulo: 'Titulo2', descricao:'Descrição2', link:'Link2'},
-                      {titulo: 'Titulo3', descricao:'Descrição3', link:'Link3'}
-                    ]
+          texto: '',
+          textarea:'',
+          termos: true,
+          notificacoes:[],
+          sexo:'M', <!--null-->
+          ano: null,
+          cores: ['Vermelho'],
+          busca: null
         }
       });
 
-
     </script>
-
 
   </body>
 </html>
